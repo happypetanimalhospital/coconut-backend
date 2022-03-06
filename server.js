@@ -12,7 +12,7 @@ const config = require('./config.js');
 const MONGODB_URI = config.mongodburi || 'mongodb://localhost/basic-mern-app';
 const PORT = process.env.PORT || 5000;
 
-mongoose.connect('mongodb://localhost:27017/basic-mern-app');
+mongoose.connect('mongodb+srv://admin:dbadmin@cluster0.d8sm2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority');
 mongoose.connection.on('connected', () => {
     console.log('Connected to MongoDB');
     console.log(mongoose.connection.readyState)
