@@ -10,24 +10,22 @@ const users = require('./routes/user.Routes');
 const config = require('./config.js');
 
 const MONGODB_URI = config.mongodburi || 'mongodb://localhost/basic-mern-app';
+const mongouri = process.env.MONGO_URL;
 const PORT = process.env.PORT || 5000;
 
-mongoose.connect('mongodb+srv://admin:dbadmin@cluster0.d8sm2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority');
-mongoose.connection.on('connected', () => {
-    console.log('Connected to MongoDB');
-    console.log(mongoose.connection.readyState)
-
-});
-mongoose.connection.on('error', (error) => {
-    console.log(error);
-    console.log(mongoose.connection.readyState)
-
-});
+mongoose
+  .connect(mongouri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("MongoDB Connected…");
+  })
+  .catch((err) => console.log(err));
 
 let app = express();
 app.use(cors())
 app.options('*', cors());
-console.log(mongoose.connection.readyState)
 
 // Body Parser Middleware
 app.use(bodyParser.urlencoded({extended: false}));

@@ -61,8 +61,6 @@ router.post('/validate', async (req, res) => {
 });
 
 router.post('/signup', (req, res) => {
-    console.log(req.body.password , '44')
-
 
     const name = req.body.name || '';
     const type = req.body.type || '';
@@ -72,7 +70,6 @@ router.post('/signup', (req, res) => {
     const mobile2 = req.body.mobile2;
     const landLine = req.body.landLine;
     const state = req.body.state || '';
-    console.log(password , '33rrr')
 
     const scaleOfBusiness = req.body.scaleOfBusiness || '';
     const canProvideTreeClimbers = req.body.canProvideTreeClimbers;
@@ -97,7 +94,6 @@ router.post('/signup', (req, res) => {
     const reqBody = { name, type, email, password, mobile1 , state };
 
     let errors = {};
-    console.log(93)
 
     Object.keys(reqBody).forEach(async field => {
         if (reqBody[field] === '') {
@@ -118,12 +114,10 @@ router.post('/signup', (req, res) => {
         }
     });
     if (Object.keys(errors).length > 0) {
-        console.log(118)
         res.json({ errors });
     } else {
         console.log(password)
         const newUser = new User({
-            id: uuid.v4(),
             name: name,
             type: type,
             email: email,
@@ -168,14 +162,17 @@ router.post('/signup', (req, res) => {
                 newUser.password = hash;
                 // Save the User
                 console.log(158)
-                newUser.save(function(err){
-                    if(err) {
-                        console.log(err , '12388333')
-                        return err
-                    }
-                    console.log(164)
-                    res.json({ success: 'success' });
+                User.create(newUser).then(function(item){
+                    res.send(item);
                 });
+                // newUser.save(function(err){
+                //     if(err) {
+                //         console.log(err , '12388333')
+                //         return err
+                //     }
+                //     console.log(164)
+                //     res.json({ success: 'success' });
+                // });
             });
         });
     }
