@@ -64,6 +64,52 @@ router.post("/validate", async (req, res) => {
   }
 });
 
+router.post("/initial-validate", async (req, res) => {
+  const name = req.body.name || "";
+  const type = req.body.type || "";
+  const email = req.body.email || "";
+  const password = req.body.password || "";
+  const mobile1 = req.body.mobile1;
+  const mobile2 = req.body.mobile2;
+  const landLine = req.body.landLine;
+  const state = req.body.state || "";
+
+  const reqBody = { name, type, email, password, mobile1, state };
+
+  var errors = {};
+
+  for(let field of  Object.keys(reqBody)) {
+    if (reqBody[field] === "") {
+      errors = { ...errors, [field]: "This field is required" };
+    }
+    if (field === "email") {
+      const value = reqBody[field];
+
+      const { error, isUnique } = await checkUserUniqueness(field, value);
+
+      if (!isUnique) {
+        errors = {...errors, ...error};
+      }
+    }
+    
+    // console.log(errors);
+    // if (field === "email" && !validateEmail(reqBody[field])) {
+    //   errors = { ...errors, [field]: "Not a valid Email" };
+    // }
+    // if (field === "password" && password !== "" && password < 4) {
+    //   errors = { ...errors, [field]: "Password too short" };
+    // }
+    // console.log(errors);
+  }
+
+  console.log(errors);
+  if (Object.keys(errors).length > 0) {
+    res.json({ errors });
+  } else {
+    res.send({ success: "success" });
+  }
+});
+
 router.post("/signup", (req, res) => {
   const name = req.body.name || "";
   const type = req.body.type || "";
@@ -93,33 +139,37 @@ router.post("/signup", (req, res) => {
   const intervalBetweenHarvest = req.body.intervalBetweenHarvest || "";
   const recieveEmails = req.body.recieveEmails;
   const dirstrict = req.body.dirstrict || "";
+  const noOfTrees = req.body.noOfTrees || "";
+  const areasToCollect = req.body.areasToCollect || "";
+  const orgType = req.body.orgType || "";
+  const orgName = req.body.orgName || "";
 
   const reqBody = { name, type, email, password, mobile1, state };
 
   let errors = {};
 
-  Object.keys(reqBody).forEach(async (field) => {
-    if (reqBody[field] === "") {
-      errors = { ...errors, [field]: "This field is required" };
-    }
-    if (field === "email") {
-      const value = reqBody[field];
-      const { error, isUnique } = await checkUserUniqueness(field, value);
-      if (!isUnique) {
-        errors = { ...errors, ...error };
-      }
-    }
-    if (field === "email" && !validateEmail(reqBody[field])) {
-      errors = { ...errors, [field]: "Not a valid Email" };
-    }
-    if (field === "password" && password !== "" && password < 4) {
-      errors = { ...errors, [field]: "Password too short" };
-    }
-  });
-  if (Object.keys(errors).length > 0) {
-    res.json({ errors });
-  } else {
-    console.log(password);
+//   Object.keys(reqBody).forEach(async (field) => {
+//     if (reqBody[field] === "") {
+//       errors = { ...errors, [field]: "This field is required" };
+//     }
+//     if (field === "email") {
+//       const value = reqBody[field];
+//       const { error, isUnique } = await checkUserUniqueness(field, value);
+//       if (!isUnique) {
+//         errors = { ...errors, ...error };
+//       }
+//     }
+//     if (field === "email" && !validateEmail(reqBody[field])) {
+//       errors = { ...errors, [field]: "Not a valid Email" };
+//     }
+//     if (field === "password" && password !== "" && password < 4) {
+//       errors = { ...errors, [field]: "Password too short" };
+//     }
+//   });
+//   if (Object.keys(errors).length > 0) {
+//     res.json({ errors });
+//   } else {
+
     const newUser = new User({
       name: name,
       type: type,
@@ -147,8 +197,11 @@ router.post("/signup", (req, res) => {
       recieveEmails: recieveEmails,
       dirstrict: dirstrict,
       state: state,
+      noOfTrees: noOfTrees,
+      areasToCollect: areasToCollect,
+      orgType: orgType,
+      orgName: orgName,
     });
-    console.log(147);
 
     // Generate the Salt
     bcrypt.genSalt(10, (err, salt) => {
@@ -177,7 +230,7 @@ router.post("/signup", (req, res) => {
         // });
       });
     });
-  }
+//   }
 });
 
 router.post("/login", (req, res) => {
@@ -210,15 +263,15 @@ router.post("/login", (req, res) => {
               },
               config.jwtSecret
             );
-            res.json({ token, success: "success" });
+            res.send({ token: token, success: "success" });
           } else {
-            res.json({
+            res.send({
               errors: { invalidCredentials: "Invalid Username or Password" },
             });
           }
         });
       } else {
-        res.json({
+        res.send({
           errors: { invalidCredentials: "Invalid Username or Password" },
         });
       }

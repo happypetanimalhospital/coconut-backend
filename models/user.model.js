@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 
 const UserSchema = mongoose.Schema({
-    id: {
-        type: String,
-        required: true
-
-    },
     state: {
         type: String
     },    
@@ -88,7 +83,19 @@ const UserSchema = mongoose.Schema({
     },
     dirstrict: {
         type: String,
-    }
+    },
+    noOfTrees: {
+        type: Number,
+    },
+    areasToCollect: {
+        type: String,
+    },
+    orgType: {
+        type: String,
+    },
+    orgName: {
+        type: String,
+    },
 });
 
 const User = mongoose.model('User', UserSchema)
