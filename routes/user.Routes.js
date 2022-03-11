@@ -5,6 +5,7 @@ const uuid = require("uuid");
 
 const User = require("../models/user.model.js");
 const config = require("../config");
+const BuyerSchema = require("../models/buyerDetails.model.js");
 
 const router = express.Router();
 
@@ -78,7 +79,7 @@ router.post("/initial-validate", async (req, res) => {
 
   var errors = {};
 
-  for(let field of  Object.keys(reqBody)) {
+  for (let field of Object.keys(reqBody)) {
     if (reqBody[field] === "") {
       errors = { ...errors, [field]: "This field is required" };
     }
@@ -88,10 +89,10 @@ router.post("/initial-validate", async (req, res) => {
       const { error, isUnique } = await checkUserUniqueness(field, value);
 
       if (!isUnique) {
-        errors = {...errors, ...error};
+        errors = { ...errors, ...error };
       }
     }
-    
+
     // console.log(errors);
     // if (field === "email" && !validateEmail(reqBody[field])) {
     //   errors = { ...errors, [field]: "Not a valid Email" };
@@ -148,89 +149,89 @@ router.post("/signup", (req, res) => {
 
   let errors = {};
 
-//   Object.keys(reqBody).forEach(async (field) => {
-//     if (reqBody[field] === "") {
-//       errors = { ...errors, [field]: "This field is required" };
-//     }
-//     if (field === "email") {
-//       const value = reqBody[field];
-//       const { error, isUnique } = await checkUserUniqueness(field, value);
-//       if (!isUnique) {
-//         errors = { ...errors, ...error };
-//       }
-//     }
-//     if (field === "email" && !validateEmail(reqBody[field])) {
-//       errors = { ...errors, [field]: "Not a valid Email" };
-//     }
-//     if (field === "password" && password !== "" && password < 4) {
-//       errors = { ...errors, [field]: "Password too short" };
-//     }
-//   });
-//   if (Object.keys(errors).length > 0) {
-//     res.json({ errors });
-//   } else {
+  //   Object.keys(reqBody).forEach(async (field) => {
+  //     if (reqBody[field] === "") {
+  //       errors = { ...errors, [field]: "This field is required" };
+  //     }
+  //     if (field === "email") {
+  //       const value = reqBody[field];
+  //       const { error, isUnique } = await checkUserUniqueness(field, value);
+  //       if (!isUnique) {
+  //         errors = { ...errors, ...error };
+  //       }
+  //     }
+  //     if (field === "email" && !validateEmail(reqBody[field])) {
+  //       errors = { ...errors, [field]: "Not a valid Email" };
+  //     }
+  //     if (field === "password" && password !== "" && password < 4) {
+  //       errors = { ...errors, [field]: "Password too short" };
+  //     }
+  //   });
+  //   if (Object.keys(errors).length > 0) {
+  //     res.json({ errors });
+  //   } else {
 
-    const newUser = new User({
-      name: name,
-      type: type,
-      email: email,
-      password: password,
-      mobile1: mobile1,
-      mobile2: mobile2,
-      landLine: landLine,
-      scaleOfBusiness: scaleOfBusiness,
-      canProvideTreeClimbers: canProvideTreeClimbers,
-      isRegisteredBusiness: isRegisteredBusiness,
-      businessName: businessName,
-      alternateMobile: alternateMobile,
-      alternateMobile2: alternateMobile2,
-      nearestCity: nearestCity,
-      recieveCalls: recieveCalls,
-      inheritorName: inheritorName,
-      inheritorMobile: inheritorMobile,
-      inheritorAltMobile: inheritorAltMobile,
-      aditionalInfo: aditionalInfo,
-      sizeOfLand: sizeOfLand,
-      yieldPerHarvest: yieldPerHarvest,
-      totalHarvest: totalHarvest,
-      intervalBetweenHarvest: intervalBetweenHarvest,
-      recieveEmails: recieveEmails,
-      dirstrict: dirstrict,
-      state: state,
-      noOfTrees: noOfTrees,
-      areasToCollect: areasToCollect,
-      orgType: orgType,
-      orgName: orgName,
-    });
+  const newUser = new User({
+    name: name,
+    type: type,
+    email: email,
+    password: password,
+    mobile1: mobile1,
+    mobile2: mobile2,
+    landLine: landLine,
+    scaleOfBusiness: scaleOfBusiness,
+    canProvideTreeClimbers: canProvideTreeClimbers,
+    isRegisteredBusiness: isRegisteredBusiness,
+    businessName: businessName,
+    alternateMobile: alternateMobile,
+    alternateMobile2: alternateMobile2,
+    nearestCity: nearestCity,
+    recieveCalls: recieveCalls,
+    inheritorName: inheritorName,
+    inheritorMobile: inheritorMobile,
+    inheritorAltMobile: inheritorAltMobile,
+    aditionalInfo: aditionalInfo,
+    sizeOfLand: sizeOfLand,
+    yieldPerHarvest: yieldPerHarvest,
+    totalHarvest: totalHarvest,
+    intervalBetweenHarvest: intervalBetweenHarvest,
+    recieveEmails: recieveEmails,
+    dirstrict: dirstrict,
+    state: state,
+    noOfTrees: noOfTrees,
+    areasToCollect: areasToCollect,
+    orgType: orgType,
+    orgName: orgName,
+  });
 
-    // Generate the Salt
-    bcrypt.genSalt(10, (err, salt) => {
-      if (err) return err;
-      // Create the hashed password
-      console.log(newUser.password, "pass");
-      bcrypt.hash(newUser.password, salt, (err, hash) => {
-        if (err) {
-          console.log(err, "123333");
+  // Generate the Salt
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) return err;
+    // Create the hashed password
+    console.log(newUser.password, "pass");
+    bcrypt.hash(newUser.password, salt, (err, hash) => {
+      if (err) {
+        console.log(err, "123333");
 
-          return err;
-        }
-        newUser.password = hash;
-        // Save the User
-        console.log(158);
-        User.create(newUser).then(function (item) {
-          res.send(item);
-        });
-        // newUser.save(function(err){
-        //     if(err) {
-        //         console.log(err , '12388333')
-        //         return err
-        //     }
-        //     console.log(164)
-        //     res.json({ success: 'success' });
-        // });
+        return err;
+      }
+      newUser.password = hash;
+      // Save the User
+      console.log(158);
+      User.create(newUser).then(function (item) {
+        res.send(item);
       });
+      // newUser.save(function(err){
+      //     if(err) {
+      //         console.log(err , '12388333')
+      //         return err
+      //     }
+      //     console.log(164)
+      //     res.json({ success: 'success' });
+      // });
     });
-//   }
+  });
+  //   }
 });
 
 router.post("/login", (req, res) => {
@@ -284,6 +285,51 @@ router.get("/buyers", isAuthenticated, (req, res) => {
     if (err) throw err;
     res.send(buyers);
   });
+});
+
+router.post("/buyerDetails", isAuthenticated, async (req, res) => {
+  console.log(req.body);
+  const user = await User.findOne({ _id: req.body.id }).catch(function (err) {
+    console.log(err);
+  });
+
+  const details = await BuyerSchema.findOne({ user: req.body.id }).catch(
+    function (err) {
+      console.log(err);
+    }
+  );
+
+  if (user)
+    res.send({ buyerName: user.name, phone: user.mobile1, ratings: details });
+  else {
+    res.send({ error: "Can't Find Buyer" });
+  }
+});
+
+router.get("/seller", isAuthenticated, (req, res) => {
+  User.find({ type: "Seller" }, (err, buyers) => {
+    if (err) throw err;
+    res.send(buyers);
+  });
+});
+
+router.post("/sellerDetails", isAuthenticated, async (req, res) => {
+  console.log(req.body);
+  const user = await User.findOne({ _id: req.body.id }).catch(function (err) {
+    console.log(err);
+  });
+
+  const details = await BuyerSchema.findOne({ user: req.body.id }).catch(
+    function (err) {
+      console.log(err);
+    }
+  );
+
+  if (user)
+    res.send({ buyerName: user.name, phone: user.mobile1, ratings: details });
+  else {
+    res.send({ error: "Can't Find Buyer" });
+  }
 });
 
 router.get("/seller", isAuthenticated, (req, res) => {
