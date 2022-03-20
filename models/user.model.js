@@ -81,7 +81,7 @@ const UserSchema = mongoose.Schema({
     recieveEmails: {
         type: String,
     },
-    dirstrict: {
+    district: {
         type: String,
     },
     noOfTrees: {

@@ -7,6 +7,7 @@ require('dotenv').config();
 
 const buyers = require('./routes/buyer.Routes');
 const users = require('./routes/user.Routes');
+const bids = require('./routes/bid.Routes');
 const config = require('./config.js');
 
 const MONGODB_URI = config.mongodburi || 'mongodb://localhost/basic-mern-app';
@@ -45,6 +46,7 @@ app.use((req, res, next) => {
 
 app.use('/api/buyers', buyers);
 app.use('/api/users', users);
+app.use('/api/bids', bids);
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '/client/build/index.html'));

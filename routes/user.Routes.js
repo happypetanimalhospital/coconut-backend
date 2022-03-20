@@ -195,7 +195,7 @@ router.post("/signup", (req, res) => {
       totalHarvest: totalHarvest,
       intervalBetweenHarvest: intervalBetweenHarvest,
       recieveEmails: recieveEmails,
-      dirstrict: dirstrict,
+      district: dirstrict,
       state: state,
       noOfTrees: noOfTrees,
       areasToCollect: areasToCollect,
@@ -286,8 +286,20 @@ router.get("/buyers", isAuthenticated, (req, res) => {
   });
 });
 
-router.get("/seller", isAuthenticated, (req, res) => {
-  User.find({ id: { $ne: req.userId }, type: "SELLER" }, (err, sellers) => {
+router.get("/seller", (req, res) => {
+  console.log(req.query.userId , "req.userId");
+  try {
+    User.findById({_id:  req.query.userId }, (err, sellers) => {
+      if (err) throw err;
+      res.json({ sellers });
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.get("/sellers", (req, res) => {
+  User.find({ type: "Seller" }, (err, sellers) => {
     if (err) throw err;
     res.json({ sellers });
   });
