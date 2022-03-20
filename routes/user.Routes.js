@@ -313,29 +313,43 @@ router.get("/seller", isAuthenticated, (req, res) => {
   });
 });
 
-router.post("/sellerDetails", isAuthenticated, async (req, res) => {
+router.post("/sellerDetails", async (req, res) => {
   console.log(req.body);
   const user = await User.findOne({ _id: req.body.id }).catch(function (err) {
     console.log(err);
   });
 
-  const details = await BuyerSchema.findOne({ user: req.body.id }).catch(
-    function (err) {
-      console.log(err);
-    }
-  );
 
-  if (user)
-    res.send({ buyerName: user.name, phone: user.mobile1, ratings: details });
+  if (user) res.send(user);
   else {
-    res.send({ error: "Can't Find Buyer" });
+    res.send({ error: "Can't Find Seller" });
   }
 });
 
-router.get("/seller", isAuthenticated, (req, res) => {
-  User.find({ id: { $ne: req.userId }, type: "SELLER" }, (err, sellers) => {
+router.get("/sellers", isAuthenticated, (req, res) => {
+  User.find({ type: "Seller", accountStatus: "Published" }, (err, sellers) => {
     if (err) throw err;
-    res.json({ sellers });
+    res.send(sellers);
+  });
+});
+
+router.post("/sellersAdmin", (req, res) => {
+  console.log("/sellersAdmin");
+  User.find({ type: "Seller" }, (err, sellers) => {
+    if (err) throw err;
+    res.send(sellers);
+  });
+});
+
+
+
+
+router.post("/sellersAccountStatus", (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.body.id },
+    { accountStatus: req.body.status }
+  ).then((e) => {
+    res.send(e);
   });
 });
 
