@@ -6,6 +6,7 @@ const uuid = require("uuid");
 const User = require("../models/user.model.js");
 const Bid = require("../models/bid.model.js");
 const config = require("../config");
+const { query } = require("express");
 
 const router = express.Router();
 
@@ -44,5 +45,13 @@ router.post("/add", (req, res) => {
     });
     
 });
+
+router.get("/bids-buyer", (req, res) => {
+  Bid.find({ buyerId: req.query.id }, (err, bids) => {
+    if (err) throw err;
+    res.send(bids);
+  });
+});
+
 
 module.exports = router;

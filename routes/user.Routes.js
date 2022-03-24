@@ -263,6 +263,7 @@ router.post("/login", (req, res) => {
               {
                 id: user.id,
                 type: user.type,
+                name: user.name,
               },
               config.jwtSecret
             );
