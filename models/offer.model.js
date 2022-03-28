@@ -1,32 +1,28 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const OfferSchema = mongoose.Schema({
-    id: {
-        type: String
-    },
-    from: {
-        type: String,
-        required: true
-    },
-    to: {
-        type: String,
-        required: true
-    },
-    counter: {
-        type: Boolean,
-        required: true
-    },
-    sellerApproved: {
-        type: Boolean
-    },
-    buyerApproved: {
-        type: Boolean
-    },
-    state: {
-        type: String
-    }
+  buyerId: {
+    type: String,
+  },
+  sellerId: {
+    type: String,
+  },
+  buyerName: {
+    type: String,
+  },
+  sellerName: {
+    type: String,
+  },
+  amount: {
+    type: Number,
+    required: true,
+  },
+  status: {
+    type: String,
+    default: "pending",
+  },
 });
 
-const User = mongoose.model('Offer', UserSchema)
+const Offer = mongoose.model("Offer", OfferSchema);
 
-module.exports = User;
+module.exports = Offer;
