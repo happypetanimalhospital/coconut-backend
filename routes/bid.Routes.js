@@ -53,5 +53,22 @@ router.get("/bids-buyer", (req, res) => {
   });
 });
 
+router.get("/bids-seller", (req, res) => {
+  Bid.find({ sellerId: req.query.id }, (err, bids) => {
+    if (err) throw err;
+    res.send(bids);
+  });
+});
+
+router.post("/confirm", (req, res) => {
+  Bid.findOneAndUpdate(
+    { _id: req.body.id },
+    { status: req.body.status },
+    (err, bids) => {
+      if (err) throw err;
+      res.send(bids);
+    }
+  );
+});
 
 module.exports = router;
