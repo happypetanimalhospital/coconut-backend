@@ -36,16 +36,19 @@ router.post("/add", (req, res) => {
     res.status(400).json({ errors });
   }
 
-  Offer.findOne({ sellerId: sellerId, amount: amount, status:"pending" }, (err, user) => {
-    if (user != null) {
-      errors = { ...errors, ["offer"]: "You have already send an Offer" };
-      res.status(400).json({ errors });
-    } else {
-      Offer.create(newBid).then(function (item) {
-        res.send(item);
-      });
+  Offer.findOne(
+    { sellerId: sellerId, amount: amount, status: "pending" },
+    (err, user) => {
+      if (user != null) {
+        errors = { ...errors, ["offer"]: "You have already send an Offer" };
+        res.status(400).json({ errors });
+      } else {
+        Offer.create(newBid).then(function (item) {
+          res.send(item);
+        });
+      }
     }
-  });
+  );
 });
 
 router.post("/offers-seller", (req, res) => {
@@ -65,7 +68,7 @@ router.post("/offers-buyer", (req, res) => {
 router.post("/accept-offer-buyer", (req, res) => {
   Offer.findOneAndUpdate(
     { _id: req.body.id },
-    { status: "accepted" },
+    { status: "accepted", date: req.body.date },
     (err, bids) => {
       if (err) throw err;
       res.send(bids);
@@ -83,7 +86,6 @@ router.post("/cancel", (req, res) => {
     }
   );
 });
-
 
 router.post("/confirm", (req, res) => {
   Offer.findOneAndUpdate(

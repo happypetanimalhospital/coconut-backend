@@ -17,6 +17,9 @@ const OfferSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
+  date: {
+    type: String,
+  },
   status: {
     type: String,
     default: "pending",
