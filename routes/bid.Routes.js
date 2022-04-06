@@ -63,7 +63,7 @@ router.get("/bids-seller", (req, res) => {
 router.post("/confirm", (req, res) => {
   Bid.findOneAndUpdate(
     { _id: req.body.id },
-    { status: req.body.status },
+    { status: req.body.status, harvestDate: req.body.harvestDate },
     (err, bids) => {
       if (err) throw err;
       res.send(bids);

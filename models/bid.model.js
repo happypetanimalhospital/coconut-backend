@@ -17,6 +17,9 @@ const BidSchema = mongoose.Schema({
         type: Number,
         required: true
     },
+    harvestDate: {
+        type: String,
+    },
     status: {
         type: String,
         default: 'pending'
