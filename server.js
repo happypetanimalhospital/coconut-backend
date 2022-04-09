@@ -45,6 +45,12 @@ app.use((req, res, next) => {
      next();
 });
 
+app.use(express.static( 'client/build' ));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html')); // relative path
+});
+
 app.use('/api/buyers', buyers);
 app.use('/api/users', users);
 app.use('/api/bids', bids);
