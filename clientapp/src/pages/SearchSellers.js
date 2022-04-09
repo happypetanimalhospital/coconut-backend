@@ -51,7 +51,8 @@ function Search() {
     fetch(`http://localhost:5000/api/users/sellers`, {
       method: "GET",
       headers: new Headers({
-        Accept: "application/vnd.github.cloak-preview",
+        Accept: "application/json",
+        "Content-Type": "application/json",
       }),
     })
       .then((res) => res.json())

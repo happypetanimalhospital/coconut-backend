@@ -1,20 +1,23 @@
 import React from "react";
 import CountUp from "react-countup";
 import ListItemBuyer from "../components/ListItemBuyer";
-import Logo from "../assets/logo.jpg"
+import Logo from "../assets/logo.jpg";
 function Home() {
   return (
     <div className="w-screen h-screen ">
       <div className="h-20"></div>
-      <div class="relative z-0 h-2/3  self-center object-cover  justify-items-start border rounded-3xl shadow-lg overflow-hidden  mx-20 ">
+      <div class="relative z-0 h-2/3  self-center object-cover  justify-items-start border rounded-3xl shadow-lg overflow-hidden mx-2 sm:mx-20 ">
         <div class="absolute inset-0 flex flex-col justify-items-center justify-center  z-10 h-auto  bg-slate-700/50 ">
           {/* <p class="text-6xl font-bold text-white text-center">පොල් මුරේ</p> */}
 
-          <img className="h-48 w-64 object-cover mx-auto rounded-2xl shadow-lg" src={Logo}></img>
+          <img
+            className="h-48 w-64 object-cover mx-auto rounded-2xl shadow-lg"
+            src={Logo}
+          ></img>
           <h3 class="text-3xl font-bold text-gray-200 text-center mt-5">
             Online Platform for buy and sell coconuts in Sri Lanka
           </h3>
-          <div className="flex flex-row mx-auto">
+          <div className="flex flex-col sm:flex-row mx-auto">
             <a
               type="button"
               className=" mt-5 text-center inline-block px-2 py-4 w-60 bg-green-500 text-white font-medium text-base leading-tight uppercase rounded-full shadow-md hover:bg-green-500 hover:shadow-lg focus:bg-green-500 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-600 active:shadow-lg transition duration-150 ease-in-out"
@@ -24,7 +27,7 @@ function Home() {
             </a>
             <a
               type="button"
-              className="ml-4 mt-5 text-center inline-block px-2 py-4 w-60 bg-blue-500 text-white font-medium text-base leading-tight uppercase rounded-full shadow-md hover:bg-blue-600 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+              className="sm:ml-4 mt-5 text-center inline-block px-2 py-4 w-60 bg-blue-500 text-white font-medium text-base leading-tight uppercase rounded-full shadow-md hover:bg-blue-600 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
               href="/login"
             >
               Login
@@ -43,30 +46,33 @@ function Home() {
       <div class="absolute inset-0 flex justify-center items-center h-2/3 z-10 mt-32">
         <h3 class="text-3xl font-bold text-gray-200">Online Platform for buy and sell coconuts in Sri Lanka</h3>
       </div> */}
-      <div className="flex flex-row p-4 justify-center items-center mt-10">
-        <div className="flex flex-row items-center">
-          <h3 className="text-2xl mr-4"> Number of Buyers </h3>
+      <div className="flex flex-col sm:flex-row p-4 justify-center items-center mt-10">
+        <div className="flex flex-col items-center mx-auto">
           <div className="text-4xl font-semibold text-transparent  bg-clip-text bg-gradient-to-r from-green-500 to-green-700">
             <CountUp end={124} duration={3} />
           </div>
+          <h3 className="text-2xl sm:mr-4 sm:mb-0 mb-6"> Number of Buyers </h3>
         </div>
-        <div className="flex flex-row items-center ml-20">
-          <h3 className="text-2xl mr-4 "> Number of Sellers </h3>
+        <div className="flex flex-col items-center ml-20 mx-auto">
           <div className=" font-semibold text-transparent text-4xl bg-clip-text bg-gradient-to-r from-blue-700 via-blue-800 to-gray-900">
             <CountUp end={224} duration={3} />
           </div>
+          <h3 className="text-2xl sm:mr-4 sm:mb-0 mb-6"> Number of Sellers </h3>
         </div>
-        <div className="flex flex-row items-center ml-20">
-          <h3 className="text-2xl mr-4 "> Maximum Asking Price </h3>
+        <div className="flex flex-col items-center ml-20 mx-auto">
           <div className=" font-semibold text-transparent text-4xl bg-clip-text bg-gradient-to-r from-blue-700 via-blue-800 to-gray-900">
             <CountUp end={27000} duration={3} /> Rs
           </div>
+          <h3 className="text-2xl sm:mr-4 "> Maximum Asking Price </h3>
         </div>
       </div>
-      <h3 className="text-2xl w-screen text-center mt-20 font-semibold text-lime-700"> Premium Buyers </h3>
+      <h3 className="text-2xl w-screen text-center mt-20 font-semibold text-lime-700">
+        {" "}
+        Premium Buyers{" "}
+      </h3>
       <div
         id="carouselExampleControls"
-        class="carousel slide relative mx-40 mt-6 mb-20"
+        class="carousel slide relative sm:mx-40 mt-6 mb-20"
         data-bs-ride="carousel"
       >
         <div class="carousel-inner relative w-full overflow-hidden pt-4 bg-lime-50">
@@ -96,7 +102,7 @@ function Home() {
           </div>
         </div>
         <button
-          class="bg-lime-500 carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
+          class="sm:bg-lime-500 carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
           type="button"
           data-bs-target="#carouselExampleControls"
           data-bs-slide="prev"
@@ -108,7 +114,7 @@ function Home() {
           <span class="visually-hidden">Previous</span>
         </button>
         <button
-          class="bg-lime-500 carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
+          class="sm:bg-lime-500 carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
           type="button"
           data-bs-target="#carouselExampleControls"
           data-bs-slide="next"
@@ -120,10 +126,13 @@ function Home() {
           <span class="visually-hidden">Next</span>
         </button>
       </div>
-      <h3 className="text-2xl w-screen text-center mt-20 font-semibold text-lime-700"> Premium Sellers </h3>
+      <h3 className="text-2xl w-screen text-center mt-20 font-semibold text-lime-700">
+        {" "}
+        Premium Sellers{" "}
+      </h3>
       <div
-        id="carouselExampleControls"
-        class="carousel slide relative mx-40 mt-6 mb-20"
+        id="carouselExampleControls2"
+        class="carousel slide relative sm:mx-40 mt-6 mb-20"
         data-bs-ride="carousel"
       >
         <div class="carousel-inner relative w-full overflow-hidden pt-4 bg-lime-50">
@@ -153,9 +162,9 @@ function Home() {
           </div>
         </div>
         <button
-          class="bg-lime-500 carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
+          class="sm:bg-lime-500 carousel-control-prev absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline left-0"
           type="button"
-          data-bs-target="#carouselExampleControls"
+          data-bs-target="#carouselExampleControls2"
           data-bs-slide="prev"
         >
           <span
@@ -165,9 +174,9 @@ function Home() {
           <span class="visually-hidden">Previous</span>
         </button>
         <button
-          class="bg-lime-500 carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
+          class="sm:bg-lime-500 carousel-control-next absolute top-0 bottom-0 flex items-center justify-center p-0 text-center border-0 hover:outline-none hover:no-underline focus:outline-none focus:no-underline right-0"
           type="button"
-          data-bs-target="#carouselExampleControls"
+          data-bs-target="#carouselExampleControls2"
           data-bs-slide="next"
         >
           <span

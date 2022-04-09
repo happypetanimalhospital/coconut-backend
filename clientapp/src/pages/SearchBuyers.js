@@ -55,7 +55,8 @@ function SearchBuyers() {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/buyers`, {
       method: "GET",
       headers: new Headers({
-        Accept: "application/vnd.github.cloak-preview",
+        Accept: "application/json",
+        "Content-Type": "application/json",
       }),
     })
       .then((res) => res.json())
