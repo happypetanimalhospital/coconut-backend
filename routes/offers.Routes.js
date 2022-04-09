@@ -68,7 +68,7 @@ router.post("/offers-buyer", (req, res) => {
 router.post("/accept-offer-buyer", (req, res) => {
   Offer.findOneAndUpdate(
     { _id: req.body.id },
-    { status: "accepted", date: req.body.date },
+    { status: "accepted" },
     (err, bids) => {
       if (err) throw err;
       res.send(bids);
@@ -88,9 +88,10 @@ router.post("/cancel", (req, res) => {
 });
 
 router.post("/confirm", (req, res) => {
+  console.log(req.body);
   Offer.findOneAndUpdate(
     { _id: req.body.id },
-    { status: "confirmed" },
+    { status: "confirmed", date: req.body.date },
     (err, bids) => {
       if (err) throw err;
       res.send(bids);
