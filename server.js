@@ -48,7 +48,7 @@ app.use((req, res, next) => {
 app.use(express.static( 'clientapp/build' ));
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html')); // relative path
+    res.sendFile(path.join(__dirname, 'clientapp', 'build', 'index.html')); // relative path
 });
 
 app.use('/api/buyers', buyers);
@@ -56,9 +56,7 @@ app.use('/api/users', users);
 app.use('/api/bids', bids);
 app.use('/api/offers', offers);
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/client/build/index.html'));
-});
+
 
 app.listen(PORT, () => {
     console.log('Server started on port', PORT);
