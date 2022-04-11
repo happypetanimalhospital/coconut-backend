@@ -49,7 +49,7 @@ function Search() {
 
   const loadSellers = () => {
     fetch(`http://localhost:5000/api/users/sellers`, {
-      method: "GET",
+      method: "POST",
       headers: new Headers({
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -69,7 +69,7 @@ function Search() {
 
   const [selectedDistrict, setSelectedDistrict] = useState(districts[0]);
   const [selectedScale, setSelectedScale] = useState(scale[0]);
-  const [selectedSorting, setSelectedSorting] = useState(districts[0]);
+  const [selectedSorting, setSelectedSorting] = useState(sortings[0]);
 
 
   return (

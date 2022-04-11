@@ -47,13 +47,13 @@ const sortings = [
 function SearchBuyers() {
   const [selectedDistrict, setSelectedDistrict] = useState(districts[0]);
   const [selectedScale, setSelectedScale] = useState(scale[0]);
-  const [selectedSorting, setSelectedSorting] = useState(districts[0]);
+  const [selectedSorting, setSelectedSorting] = useState(sortings[0]);
 
   const [buyers, setBuyers] = useState(null);
 
   const loadBuyers = () => {
     fetch(`${process.env.REACT_APP_BACKEND_URL}/api/users/buyers`, {
-      method: "GET",
+      method: "POST",
       headers: new Headers({
         Accept: "application/json",
         "Content-Type": "application/json",

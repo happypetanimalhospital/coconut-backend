@@ -283,7 +283,7 @@ router.post("/login", (req, res) => {
   }
 });
 
-router.get("/buyers", isAuthenticated, (req, res) => {
+router.post("/buyers", isAuthenticated, (req, res) => {
   User.find({ id: { $ne: req.userId }, type: "Buyer" }, (err, buyers) => {
     if (err) throw err;
     res.send(buyers);
@@ -309,7 +309,7 @@ router.post("/buyerDetails", isAuthenticated, async (req, res) => {
   }
 });
 
-router.get("/seller", isAuthenticated, (req, res) => {
+router.post("/seller", isAuthenticated, (req, res) => {
   User.find({ type: "Seller" }, (err, buyers) => {
     if (err) throw err;
     res.send(buyers);
@@ -329,7 +329,7 @@ router.post("/sellerDetails", async (req, res) => {
   }
 });
 
-router.get("/sellers", isAuthenticated, (req, res) => {
+router.post("/sellers", isAuthenticated, (req, res) => {
   User.find({ type: "Seller", accountStatus: "Published" }, (err, sellers) => {
     if (err) throw err;
     res.send(sellers);
