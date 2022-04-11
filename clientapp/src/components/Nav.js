@@ -61,7 +61,7 @@ function Nav() {
           >
             <img src={Logo} style={{ height: 35 }} alt="" loading="lazy" />
           </a>
-
+          {isAuthenticated() ? (
           <ul class="navbar-nav flex flex-col pl-0 list-style-none mr-auto">
             <li class="nav-item p-2">
               <a
@@ -96,7 +96,7 @@ function Nav() {
                 My Offers
               </a>
             </li>
-          </ul>
+          </ul>):null}
         </div>
 
         {isAuthenticated() ? (
