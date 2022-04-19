@@ -7,7 +7,7 @@ import SearchBuyers from "./pages/SearchBuyers";
 import SellerDetails from "./pages/SellerDetails";
 import Admin from "./pages/Admin";
 // requires a loader
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes,useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import BuyerDetails from "./pages/BuyerDetails";
 import AdminAds from "./pages/AdminAds";
@@ -29,14 +29,20 @@ import { RequireAuth } from "./components/RequiredAuth";
 import { RequireAdmin } from "./components/RequiredAdmin";
 import MyBids from "./pages/MyBids";
 import MyOffersBuyer from "./pages/MyOffersBuyer";
+import { useEffect } from "react";
+
+
+const LogoutWrapper = ({ children }) => {
+  let navigate=useNavigate();
+
+  useEffect(() => {
+    Auth.logout();
+    navigate("/")
+  }, []);
+  return children;
+};
 
 function App() {
-  // const logout = (component) => {
-  //   //posting arg1 as an example of whatever you are wanting to do.
-  //   Auth.logout();
-  //   return component;
-  // };sdsds
-//sdsads
   return (
     <>
       <Router>
@@ -108,7 +114,6 @@ function App() {
             <Route path="/offersBuyer" element={<MyOffersBuyer />} />
           </Route>
 
-
           <Route element={<WithNav />}>
             <Route path="/viewOffer" element={<OfferDetails />} />
           </Route>
@@ -117,10 +122,14 @@ function App() {
             <Route path="/bids" element={<MyBids />} />
           </Route>
 
-          {/* <Route element={<WithNav />}>
-            <Route path="/logout" element={() =>logout(<Home />)} />
-          </Route> */}
-
+          <Route
+            path="/logout"
+            element={
+              <LogoutWrapper>
+                <Home />
+              </LogoutWrapper>
+            }
+          />
           {/* <Route exact path="/login" element={<Login />} />
         <Route exact path="/recovery-password" element={<RecoveryPassword />} /> */}
           <Route element={<WithNav />}>

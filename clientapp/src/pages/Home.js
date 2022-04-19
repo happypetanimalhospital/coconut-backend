@@ -2,6 +2,8 @@ import React from "react";
 import CountUp from "react-countup";
 import ListItemBuyer from "../components/ListItemBuyer";
 import Logo from "../assets/logo.jpg";
+import { isAuthenticated } from "../Authentication/Auth";
+
 function Home() {
   return (
     <div className="w-screen h-screen ">
@@ -17,22 +19,34 @@ function Home() {
           <h3 class="text-3xl font-bold text-gray-200 text-center mt-5">
             Online Platform for buy and sell coconuts in Sri Lanka
           </h3>
-          <div className="flex flex-col sm:flex-row mx-auto">
-            <a
-              type="button"
-              className=" mt-5 text-center inline-block px-2 py-4 w-60 bg-green-500 text-white font-medium text-base leading-tight uppercase rounded-full shadow-md hover:bg-green-500 hover:shadow-lg focus:bg-green-500 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-600 active:shadow-lg transition duration-150 ease-in-out"
-              href="/register"
-            >
-              Register Now
-            </a>
-            <a
-              type="button"
-              className="sm:ml-4 mt-5 text-center inline-block px-2 py-4 w-60 bg-blue-500 text-white font-medium text-base leading-tight uppercase rounded-full shadow-md hover:bg-blue-600 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
-              href="/login"
-            >
-              Login
-            </a>
-          </div>
+
+          {isAuthenticated() ? (
+            <div className="flex flex-col sm:flex-row mx-auto">
+              <a
+                href="/logout"
+                className="sm:ml-4 mt-5 text-center inline-block px-2 py-4 w-60 bg-blue-500 text-white font-medium text-base leading-tight uppercase rounded-full shadow-md hover:bg-blue-600 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+              >
+                Logout
+              </a>
+            </div>
+          ) : (
+            <div className="flex flex-col sm:flex-row mx-auto">
+              <a
+                type="button"
+                className=" mt-5 text-center inline-block px-2 py-4 w-60 bg-green-500 text-white font-medium text-base leading-tight uppercase rounded-full shadow-md hover:bg-green-500 hover:shadow-lg focus:bg-green-500 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-600 active:shadow-lg transition duration-150 ease-in-out"
+                href="/register"
+              >
+                Register Now
+              </a>
+              <a
+                type="button"
+                className="sm:ml-4 mt-5 text-center inline-block px-2 py-4 w-60 bg-blue-500 text-white font-medium text-base leading-tight uppercase rounded-full shadow-md hover:bg-blue-600 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+                href="/login"
+              >
+                Login
+              </a>
+            </div>
+          )}
         </div>
         <img
           className="w-full h-full object-cover "
