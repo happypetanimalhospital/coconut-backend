@@ -21,14 +21,15 @@ function Home() {
           </h3>
 
           {isAuthenticated() ? (
-            <div className="flex flex-col sm:flex-row mx-auto">
-              <a
-                href="/logout"
-                className="sm:ml-4 mt-5 text-center inline-block px-2 py-4 w-60 bg-blue-500 text-white font-medium text-base leading-tight uppercase rounded-full shadow-md hover:bg-blue-600 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
-              >
-                Logout
-              </a>
-            </div>
+            // <div className="flex flex-col sm:flex-row mx-auto">
+            //   <a
+            //     href="/logout"
+            //     className="sm:ml-4 mt-5 text-center inline-block px-2 py-4 w-60 bg-blue-500 text-white font-medium text-base leading-tight uppercase rounded-full shadow-md hover:bg-blue-600 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
+            //   >
+            //     Logout
+            //   </a>
+            // </div>
+            null
           ) : (
             <div className="flex flex-col sm:flex-row mx-auto">
               <a

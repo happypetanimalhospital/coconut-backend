@@ -51,10 +51,24 @@ function App() {
             <Route path="/" element={<Home />} />
           </Route>
           <Route element={<WithNav />}>
-            <Route path="/sellers" element={<Search />} />
+            <Route
+              path="/sellers"
+              element={
+                <RequireAuth redirectTo="/login">
+                  <Search />
+                </RequireAuth>
+              }
+            />
           </Route>
           <Route element={<WithNav />}>
-            <Route path="/buyers" element={<SearchBuyers />} />
+            <Route
+              path="/buyers"
+              element={
+                <RequireAuth redirectTo="/login">
+                  <SearchBuyers />
+                </RequireAuth>
+              }
+            />
           </Route>
           <Route element={<WithNav />}>
             <Route path="/viewSeller:id" element={<SellerDetails />} />
@@ -73,10 +87,24 @@ function App() {
             />
           </Route>
           <Route element={<WithNav />}>
-            <Route path="/adminSellers" element={<AdminSellers />} />
+            <Route
+              path="/adminSellers"
+              element={
+                <RequireAdmin redirectTo="/">
+                  <AdminSellers />
+                </RequireAdmin>
+              }
+            />
           </Route>
           <Route element={<WithNav />}>
-            <Route path="/adminAds" element={<AdminAds />} />
+            <Route
+              path="/adminAds"
+              element={
+                <RequireAdmin redirectTo="/">
+                  <AdminAds />
+                </RequireAdmin>
+              }
+            />
           </Route>
           <Route element={<WithoutNav />}>
             <Route path="/login" element={<Login />} />

@@ -114,7 +114,7 @@ function Login() {
             </form>
             <div className="mt-12 text-sm font-display font-semibold text-gray-700 text-center">
               Don't have an account ?{" "}
-              <a className="cursor-pointer text-green-600 hover:text-green-800">
+              <a className="cursor-pointer text-green-600 hover:text-green-800" href="/register">
                 Sign up
               </a>
             </div>
