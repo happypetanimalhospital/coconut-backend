@@ -27,6 +27,7 @@ function Register() {
             initialValues={{ email: "", password: "" }}
             validate={(values) => {
               const errors = {};
+              let phoneNo = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
               if (!values.fname) {
                 errors.fname = "First Name is Required*";
               }
@@ -41,10 +42,18 @@ function Register() {
               }
               if (!values.mobile) {
                 errors.mobile = "Mobile Number is Required*";
+              } else if (!values.mobile.match(phoneNo)) {
+                errors.mobile = "Mobile Number format is incorrect";
+              }
+
+              if (values.altMobile && !values.altMobile.match(phoneNo)) {
+                errors.altMobile = "Incorrect Mobile number format";
               }
 
               if (!values.landLine) {
                 errors.landLine = "Land Line is Required*";
+              } else if (!values.landLine.match(phoneNo)) {
+                errors.landLine = "Land Line format is incorrect";
               }
 
               //email
@@ -309,7 +318,7 @@ function Register() {
                       class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                     >
                       {errors.altMobile ? (
-                        <span className="text-red-600">{errors.email}</span>
+                        <span className="text-red-600">{errors.altMobile}</span>
                       ) : (
                         "Mobile Alternative"
                       )}

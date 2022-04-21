@@ -1,5 +1,5 @@
 import { ArrowCircleRightIcon } from "@heroicons/react/solid";
-import React from "react";
+import { React, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
@@ -31,6 +31,7 @@ function RegisterSeller() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const location = useLocation();
+  const [isOrganization, setIsOrganization] = useState("None");
   return (
     <div className="lg:flex ">
       <div className="lg:w-4/5 xl:max-w-screen-sm ">
@@ -52,9 +53,19 @@ function RegisterSeller() {
             initialValues={{ scale: "Small Scale",organization_type: "None", receive_emails: "false",district: "Colombo", receive_calls: "false" }}
             validate={(values) => {
               const errors = {};
-              // if (!values.fname) {
-              //   errors.fname = "First Name is Required*";
-              // }
+              let phoneNo = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+              if (values.inheritor_mobile && !values.inheritor_mobile.match(phoneNo)) {
+                errors.inheritor_mobile = "Incorrect Mobile number format";
+              }
+              if (values.inheritor_mobile_alt && !values.inheritor_mobile_alt.match(phoneNo)) {
+                errors.inheritor_mobile_alt = "Incorrect Mobile number format";
+              }
+              if (!values.organization_type) {
+                console.log(values.organization_type);
+              }
+              if (isOrganization !== 'None' && !values.organization_name) {
+                errors.organization_name = "Required field*";
+              }
               // if (!values.lname) {
               //   errors.lname = "Last Name is Required*";
               // }
@@ -238,7 +249,7 @@ function RegisterSeller() {
             <div className="grid xl:grid-cols-2 xl:gap-6">
               <div class="relative z-0 mb-6 w-full group">
                 <input
-                  type="text"
+                      type="number"
                   name="interval_between_harvests"
                   id="floating_last_name"
                   class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -252,7 +263,7 @@ function RegisterSeller() {
                   for="floating_last_name"
                   className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
-                  Interval Between Harvest(In Base)*
+                      Interval Between Harvest(In Days)*
                 </label>
               </div>
               <div className="relative z-0 mb-6 w-full group ">
@@ -350,11 +361,15 @@ function RegisterSeller() {
                   required
                 />
                 <label
-                  for="floating_last_name"
-                  className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                  Inheritor Mobile*
-                </label>
+                      for="floating_first_name"
+                      class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                    >
+                      {errors.inheritor_mobile ? (
+                        <span className="text-red-600">{errors.inheritor_mobile}</span>
+                      ) : (
+                        "Inheritor Mobile*"
+                      )}
+                    </label>
               </div>
             </div>
 
@@ -371,11 +386,15 @@ function RegisterSeller() {
                   value={values.inheritor_mobile_alt}
                 />
                 <label
-                  for="floating_first_name"
-                  className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                  Inheritor Alt Mobile
-                </label>
+                      for="floating_first_name"
+                      class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                    >
+                      {errors.inheritor_mobile_alt ? (
+                        <span className="text-red-600">{errors.inheritor_mobile_alt}</span>
+                      ) : (
+                        "Inheritor Alt Mobile"
+                      )}
+                    </label>
               </div>
               <div className="relative z-0 mb-6 w-full group">
                 <input
@@ -413,21 +432,24 @@ function RegisterSeller() {
                 for="floating_repeat_password"
                 className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
-                Enter Areas You are Comfortable to Collecting Form
+                    Enter Areas Prefer to Collecting From
               </label>
             </div>
             <div className="grid xl:grid-cols-2 xl:gap-6">
               <div className="relative z-0 mb-6 w-full group">
                 <select
                   name="organization_type"
-                  onChange={handleChange}
+                      onChange={(e) => {
+                        handleChange(e);
+                        setIsOrganization(e.target.value);
+                      }}
                   onBlur={handleBlur}
                   value={values.organization_type}
                   className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-2 mt-5 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 "
                   id="grid-state"
                 >
-                  <option defaultChecked>None</option>
-                  <option>Private</option>
+                      <option defaultChecked >None</option>
+                      <option >Private</option>
                   <option>Public</option>
                   <option>Church</option>
                   <option>Other</option>
@@ -439,7 +461,8 @@ function RegisterSeller() {
                  Organization Type*
                 </label>
               </div>
-              <div className="relative z-0 mb-6 w-full group mt-4">
+
+                  {isOrganization !== 'None' && (<div className="relative z-0 mb-6 w-full group mt-4">
                 <input
                   type="text"
                   name="organization_name"
@@ -448,16 +471,19 @@ function RegisterSeller() {
                   value={values.organization_name}
                   id="floating_last_name"
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none    focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                  placeholder=" "
-                  required
+                      placeholder=" "
                 />
                 <label
-                  for="floating_last_name"
-                  className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                  Organization Name
-                </label>
-              </div>
+                      for="floating_first_name"
+                      class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                    >
+                      {errors.organization_name ? (
+                        <span className="text-red-600">{errors.organization_name}</span>
+                      ) : (
+                        "Organization Name*"
+                      )}
+                    </label>
+                  </div>)}
             </div>
             <div className="relative z-0 mb-6 w-full group">
               <input
