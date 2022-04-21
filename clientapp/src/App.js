@@ -31,17 +31,6 @@ import MyBids from "./pages/MyBids";
 import MyOffersBuyer from "./pages/MyOffersBuyer";
 import { useEffect } from "react";
 
-
-const LogoutWrapper = ({ children }) => {
-  let navigate=useNavigate();
-
-  useEffect(() => {
-    Auth.logout();
-    navigate("/")
-  }, []);
-  return children;
-};
-
 function App() {
   return (
     <>
@@ -149,15 +138,6 @@ function App() {
           <Route element={<WithNav />}>
             <Route path="/bids" element={<MyBids />} />
           </Route>
-
-          <Route
-            path="/logout"
-            element={
-              <LogoutWrapper>
-                <Home />
-              </LogoutWrapper>
-            }
-          />
           {/* <Route exact path="/login" element={<Login />} />
         <Route exact path="/recovery-password" element={<RecoveryPassword />} /> */}
           <Route element={<WithNav />}>
